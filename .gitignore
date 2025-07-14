@@ -1,0 +1,50 @@
+## Build results
+bin/
+obj/
+out/
+artifacts/
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Rider & IDEs
+.idea/
+*.sln.iml
+
+## VS Code
+.vscode/
+
+## Logs
+*.log
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## ASP.NET generated files
+wwwroot/lib/
+node_modules/
+bower_components/
+
+## Configuration files
+appsettings.*.json
+secrets.json
+
+## Dependency directories
+packages/
+*.nupkg
+*.snupkg
+
+## Entity Framework
+Migrations/
+
+## Others
+*.db
+*.sqlite
+*.pdb
+*.cache
+*.tmp
