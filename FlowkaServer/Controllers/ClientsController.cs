@@ -1,5 +1,6 @@
 ﻿using FlowkaDbContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlowkaServer.Controllers;
 
@@ -15,17 +16,28 @@ public class ClientsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetClients()
+    public async Task<IActionResult> GetClients()
     {
-        var clients = _db.Clients.ToList();
+        var clients = await _db.Clients.ToListAsync();
         return Ok(clients);
     }
 
-    [HttpPost]
-    public IActionResult CreateClient([FromBody] ClientEntity client)
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetClientById(int id)
     {
-        _db.Clients.Add(client);
-        _db.SaveChanges();
-        return CreatedAtAction(nameof(GetClients), new { Id = client.Id }, client);
+        var client = await _db.Clients.FindAsync(id);
+        
+        if (client == null) 
+            return NotFound();
+            
+        return Ok(client);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateClient([FromBody] ClientEntity client)
+    {
+        await _db.Clients.AddAsync(client);
+        await _db.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetClientById), new { Id = client.Id }, client);
     }
 }
