@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace FlowkaDbContext;
 
@@ -11,4 +12,6 @@ public class ClientEntity
     public string PhoneNumber { get; set; } = "";
     [MaxLength(1000)]
     public string Note { get; set; } = "";
+    [JsonIgnore]
+    public List<ServiceEntity> Services { get; set; } = new List<ServiceEntity>();
 }

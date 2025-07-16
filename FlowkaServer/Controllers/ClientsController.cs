@@ -38,6 +38,7 @@ public class ClientsController : ControllerBase
     {
         await _db.Clients.AddAsync(client);
         await _db.SaveChangesAsync();
+        
         return CreatedAtAction(nameof(GetClientById), new { Id = client.Id }, client);
     }
 }

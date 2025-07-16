@@ -36,6 +36,10 @@ public class ServicesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddService([FromBody] ServiceEntity service)
     {
+        var connectedClient = await _db.Clients.FindAsync(service.ClientId);
+        
+        if (connectedClient != null)
+            service.Client = connectedClient;
         await _db.Services.AddAsync(service);
         await _db.SaveChangesAsync();
         
