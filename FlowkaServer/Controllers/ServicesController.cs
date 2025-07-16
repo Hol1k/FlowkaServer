@@ -18,7 +18,10 @@ public class ServicesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetServices()
     {
-        var services = await _db.Services.Include(s => s.MaterialOperations).ToListAsync();
+        var services = await _db.Services
+            .Include(s => s.MaterialOperations)
+            .Include(s => s.Tools)
+            .ToListAsync();
         return Ok(services);
     }
 
@@ -42,6 +45,18 @@ public class ServicesController : ControllerBase
         
         if (connectedClient != null)
             service.Client = connectedClient;
+        
+        var toolsInDb = await _db.Tools.ToListAsync();
+        var toolsInService = service.Tools;
+        var newToolsList = new List<ToolEntity>();
+        foreach (var toolInService in toolsInService)
+        {
+            var toolInDb = toolsInDb.FirstOrDefault(t => t.Id == toolInService.Id);
+
+            newToolsList.Add(toolInDb ?? toolInService);
+        }
+        service.Tools = newToolsList;
+        
         await _db.Services.AddAsync(service);
         
         await _db.SaveChangesAsync();

@@ -7,6 +7,7 @@ public class FlowkaContext(DbContextOptions<FlowkaContext> options) : DbContext(
     public DbSet<ClientEntity> Clients { get; set; } =  null!;
     public DbSet<ServiceEntity> Services { get; set; } =  null!;
     public DbSet<MaterialOperationEntity> MaterialOperations { get; set; } =  null!;
+    public DbSet<ToolEntity> Tools { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -19,6 +20,10 @@ public class FlowkaContext(DbContextOptions<FlowkaContext> options) : DbContext(
             .HasMany(s => s.MaterialOperations)
             .WithOne(m => m.Service)
             .HasForeignKey(m => m.ServiceId);
+
+        modelBuilder.Entity<ServiceEntity>()
+            .HasMany(s => s.Tools)
+            .WithMany(t => t.Services);
         
         base.OnModelCreating(modelBuilder);
     }

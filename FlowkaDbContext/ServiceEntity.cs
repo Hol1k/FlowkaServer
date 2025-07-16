@@ -20,4 +20,5 @@ public class ServiceEntity
     [ValidateNever]
     public ClientEntity Client { get; set; } = null!;
     public List<MaterialOperationEntity> MaterialOperations { get; set; } = new List<MaterialOperationEntity>();
+    public List<ToolEntity> Tools { get; set; } = new List<ToolEntity>();
 }
