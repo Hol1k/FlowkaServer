@@ -57,6 +57,21 @@ public class ServicesController : ControllerBase
         }
         service.Tools = newToolsList;
         
+        var materialsInService = service.MaterialOperations;
+        var newMaterialsList = new List<MaterialOperationEntity>();
+        foreach (var materialInService in materialsInService)
+        {
+            var newMaterial = new MaterialOperationEntity
+            {
+                MaterialName = materialInService.MaterialName,
+                Quantity = materialInService.Quantity,
+                Service = service
+            };
+            
+            newMaterialsList.Add(newMaterial);
+        }
+        service.MaterialOperations = newMaterialsList;
+        
         await _db.Services.AddAsync(service);
         
         await _db.SaveChangesAsync();

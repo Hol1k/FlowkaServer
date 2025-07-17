@@ -19,7 +19,8 @@ public class FlowkaContext(DbContextOptions<FlowkaContext> options) : DbContext(
         modelBuilder.Entity<ServiceEntity>()
             .HasMany(s => s.MaterialOperations)
             .WithOne(m => m.Service)
-            .HasForeignKey(m => m.ServiceId);
+            .HasForeignKey(m => m.ServiceId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<ServiceEntity>()
             .HasMany(s => s.Tools)

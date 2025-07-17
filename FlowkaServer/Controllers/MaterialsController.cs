@@ -52,7 +52,11 @@ public class MaterialsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddMaterialOperation([FromBody] MaterialOperationEntity materialOperation)
     {
-        await _db.MaterialOperations.AddAsync(materialOperation);
+        await _db.MaterialOperations.AddAsync(new MaterialOperationEntity
+            {
+                MaterialName  = materialOperation.MaterialName,
+                Quantity = materialOperation.Quantity
+            });
         await _db.SaveChangesAsync();
         
         return Ok();
